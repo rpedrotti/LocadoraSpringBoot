@@ -10,6 +10,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
+import local.locadora.exceptions.FilmeException;
 
 @Entity
 @Validated
@@ -44,6 +45,10 @@ public class Filme implements Serializable {
     }
 
     public void setNome(String nome) {
+        if (nome.length() < 2 || nome.length() > 100) {
+            throw new FilmeException ("Um filme deve possuir entre 2 e 100 caracteres");
+            
+        }
         this.nome = nome.trim();
     }
 
@@ -52,6 +57,9 @@ public class Filme implements Serializable {
     }
 
     public void setEstoque(Integer estoque) {
+        if (estoque < 0) {
+            throw new FilmeException("O Estoque deve ser positivo");
+        }
         this.estoque = estoque;
     }
 
@@ -60,6 +68,12 @@ public class Filme implements Serializable {
     }
 
     public void setPrecoLocacao(Double precoLocacao) {
+        if (precoLocacao < 0) {
+            throw new FilmeException("O Valor da locação deve ser positivo");
+        }
+        if (precoLocacao > 99.99) {
+            throw new FilmeException("O Preço deve ter no máximo dois dígitos");
+        }
         this.precoLocacao = precoLocacao;
     }
 
