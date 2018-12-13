@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.Set;
 import local.locadora.exceptions.ClienteException;
 import local.locadora.exceptions.FilmeException;
+import local.locadora.exceptions.LocacaoException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -106,6 +107,20 @@ public class ClienteEntityTest {
         Filme filme = new Filme();
         filme.setPrecoLocacao(-0.01);
     }
+    @Test
+    public void locacaoNaoPoderaSerFeitaSemCliente(){
+        expected.expect(LocacaoException.class);
+        expected.expectMessage("Um cliente deve ser selecionado");
+        Locacao locacao = new Locacao();
+        locacao.setCliente(null);
+    }
+    /* @Test
+    public void locacaoDevePossuirPeloMenosUmFilme(){
+        expected.expect(LocacaoException.class);
+        expected.expectMessage("Pelo menos um filme deve ser selecionado");
+        Locacao locacao = new Locacao();
+        locacao.setFilmes(0);
+    }*/
     
 }
 
