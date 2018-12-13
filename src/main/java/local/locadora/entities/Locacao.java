@@ -63,6 +63,9 @@ public class Locacao implements Serializable {
     }
 
     public void setDataLocacao(Date dataLocacao) {
+        if (dataLocacao == null) {
+            throw new LocacaoException("A data de locação não deve ser nula");
+        }
         this.dataLocacao = dataLocacao;
     }
 
@@ -71,6 +74,9 @@ public class Locacao implements Serializable {
     }
 
     public void setDataRetorno(Date dataRetorno) {
+        if (dataRetorno == null) {
+            throw new LocacaoException("A data de retorno não deve ser nula");
+        }
         this.dataRetorno = dataRetorno;
     }
 
@@ -79,6 +85,12 @@ public class Locacao implements Serializable {
     }
 
     public void setValor(Double valor) {
+        if (valor > 99.99) {
+            throw new LocacaoException("O Preço deve ter no máximo dois dígitos");
+        }
+        if (valor < 0) {
+            throw new LocacaoException("O valor da locação deve ser positivo");
+        }
         this.valor = valor;
     }
 

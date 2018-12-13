@@ -43,7 +43,9 @@ public class Cliente implements Serializable {
     }
 
     public void setCpf(String cpf) {
-       
+        if (cpf.length() != 11 || !cpf.matches("[0123456789]+")) {
+            throw new ClienteException("O CPF não é válido");
+        }
        this.cpf = cpf;
     }
 

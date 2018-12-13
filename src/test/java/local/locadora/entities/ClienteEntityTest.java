@@ -51,6 +51,15 @@ public class ClienteEntityTest {
 
         assertThat(message, is("Um nome deve possuir entre 4 e 50 caracteres"));
     }
+    
+    @Test
+    public void cpfDeveSerValido(){
+        expected.expect(ClienteException.class);
+        expected.expectMessage("O CPF não é válido");
+        Cliente cliente = new Cliente();
+        cliente.setCpf("01824390aa3");
+    }
+    
     @Test
     public void nomeClienteNaoDeveAceitarCaracteresEspeciais(){
         expected.expect(ClienteException.class);
@@ -96,8 +105,7 @@ public class ClienteEntityTest {
         expected.expect(FilmeException.class);
         expected.expectMessage("O Preço deve ter no máximo dois dígitos");
         Filme filme = new Filme();
-        filme.setPrecoLocacao(199.99);
-        
+        filme.setPrecoLocacao(199.99);   
     }
     
     @Test
@@ -121,6 +129,33 @@ public class ClienteEntityTest {
         Locacao locacao = new Locacao();
         locacao.setFilmes(0);
     }*/
-    
+    @Test
+    public void locacaoNaoPoderaSerFeitaSemDataLocacao(){
+        expected.expect(LocacaoException.class);
+        expected.expectMessage("A data de locação não deve ser nula");
+        Locacao locacao = new Locacao();
+        locacao.setDataLocacao(null);
+    }
+      @Test
+    public void locacaoNaoPoderaSerFeitaSemDataDevolucao(){
+        expected.expect(LocacaoException.class);
+        expected.expectMessage("A data de retorno não deve ser nula");
+        Locacao locacao = new Locacao();
+        locacao.setDataRetorno(null);
+    }
+    @Test
+    public void locacaoValorDaLocacaoNaoPodeUltrapassarDoisDigitos(){
+        expected.expect(LocacaoException.class);
+        expected.expectMessage("O Preço deve ter no máximo dois dígitos");
+        Locacao locacao = new Locacao();
+        locacao.setValor(99.999);   
+    }
+     @Test
+    public void locacaoValorDaLocacaoNaoPodeSerNegativo(){
+        expected.expect(LocacaoException.class);
+        expected.expectMessage("O valor da locação deve ser positivo");
+        Locacao locacao = new Locacao();
+        locacao.setValor(-0.01);
+    }
 }
 
